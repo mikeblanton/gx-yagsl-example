@@ -20,6 +20,7 @@ import com.pathplanner.lib.util.swerve.SwerveSetpointGenerator;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -277,6 +278,30 @@ public class SwerveSubsystem extends SubsystemBase
         constraints,
         edu.wpi.first.units.Units.MetersPerSecond.of(0) // Goal end velocity in meters/sec
                                      );
+  }
+
+  /**
+   * Pathfind to an AprilTag pose with an optional robot offset.
+   *
+   * @param aprilTagId AprilTag ID from the official field layout.
+   * @param robotOffset {@link Transform2d} from the tag pose to place the robot (defaults to identity).
+   * @return Command that drives to the computed pose.
+   */
+  public Command driveToAprilTag(int aprilTagId, Transform2d robotOffset)
+  {
+    Pose2d targetPose = Vision.getAprilTagPose(aprilTagId, robotOffset);
+    return driveToPose(targetPose);
+  }
+
+  /**
+   * Pathfind to the center of an AprilTag without any offset.
+   *
+   * @param aprilTagId AprilTag ID from the official field layout.
+   * @return Command that drives to the tag pose.
+   */
+  public Command driveToAprilTag(int aprilTagId)
+  {
+    return driveToAprilTag(aprilTagId, new Transform2d());
   }
 
   /**
