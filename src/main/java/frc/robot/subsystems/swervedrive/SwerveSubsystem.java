@@ -78,6 +78,9 @@ public class SwerveSubsystem extends SubsystemBase
   public SwerveSubsystem(File directory)
   {
     boolean blueAlliance = false;
+    // Start facing the field (away from driver station)
+    // Blue alliance: 0 degrees = positive X = away from driver station
+    // Red alliance: 180 degrees = negative X = away from driver station (toward field center)
     Pose2d startingPose = blueAlliance ? new Pose2d(new Translation2d(Meter.of(1),
                                                                       Meter.of(4)),
                                                     Rotation2d.fromDegrees(0))

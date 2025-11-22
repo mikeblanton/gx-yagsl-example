@@ -85,7 +85,7 @@ public class RobotContainer
                                                                                                                   Math.PI) *
                                                                                                               (Math.PI *
                                                                                                                2))
-                                                                               .headingWhile(true)
+                                                                               .headingWhile(!RobotBase.isSimulation()) // Disable headingWhile in simulation to prevent 180-degree rotation on teleop start
                                                                                .translationHeadingOffset(true)
                                                                                .translationHeadingOffset(Rotation2d.fromDegrees(
                                                                                    0));
